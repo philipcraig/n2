@@ -4,18 +4,23 @@ mod densemap;
 mod depfile;
 mod eval;
 mod graph;
-pub mod load;
-pub mod parse;
-pub mod progress;
+mod load;
+mod parse;
+mod progress;
+pub mod run;
 mod scanner;
 mod signal;
 mod task;
-pub mod trace;
-pub mod work;
+mod trace;
+mod work;
 
-#[cfg(not(target_env = "msvc"))]
+#[cfg(unix)]
+#[macro_use]
+extern crate lazy_static;
+
+#[cfg(not(windows))]
 use jemallocator::Jemalloc;
 
-#[cfg(not(target_env = "msvc"))]
+#[cfg(not(windows))]
 #[global_allocator]
 static GLOBAL: Jemalloc = Jemalloc;
